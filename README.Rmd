@@ -11,14 +11,14 @@ knitr::opts_chunk$set(
   fig.path = "README-"
 )
 # Please put your title here to include it in the file below.
-Title <- "Title of your paper goes here"
+Title <- "Bestest Title of your paper goes here"
 ```
 
 
 # An R project template to write scientific manuscripts reproducibly by integrating data, code, text and citations
 
 About the project: 
-- this is a template repository with an R project that the [Jékely lab](https://www.cos.uni-heidelberg.de/en/research-groups/gaspar-jekely) uses to start to write new research papers.
+- this is a template repository with an R project that the [Jékely lab](https://www.cos.uni-heidelberg.de/en/research-groups/gaspar-jekely) uses to start to write new research papers. yeah right
 
 Add the specific information about your paper here:
 

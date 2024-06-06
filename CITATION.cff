@@ -9,12 +9,12 @@ message: >-
   metadata from this file.
 type: software
 authors:
-  - given-names: John
+  - given-names: John Wick
     family-names: X
-    orcid: 'https://orcid.org/0000-0000-0000-0000'
-  - given-names: Jane
+    orcid: 'https://orcid.org/0000-0000-0000-0666'
+  - given-names: Jane Goodall
     family-names: Y
-    orcid: 'https://orcid.org/0000-0000-0000-0001'
+    orcid: 'https://orcid.org/0000-0000-0000-0999'
   - given-names: other
     family-names: authors
     orcid: 'https://orcid.org/0000-0000----'
