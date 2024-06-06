@@ -22,8 +22,8 @@
 \usepackage{lmodern}
 \ifPDFTeX\else  
     % xetex/luatex font selection
-  \setmainfont[]{Arial}
-  \setmonofont[]{DejaVu Sans Mono}
+    \setmainfont[]{Arial}
+    \setmonofont[]{DejaVu Sans Mono}
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -53,14 +53,28 @@
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 % Make \paragraph and \subparagraph free-standing
+\makeatletter
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
   \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
+\makeatother
 
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -161,12 +175,12 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
-\usepackage{codehigh}
 \usepackage{float}
 \usepackage{tabularray}
 \usepackage[normalem]{ulem}
 \usepackage{graphicx}
 \UseTblrLibrary{booktabs}
+\UseTblrLibrary{siunitx}
 \NewTableCommand{\tinytableDefineColor}[3]{\definecolor{#1}{#2}{#3}}
 \newcommand{\tinytableTabularrayUnderline}[1]{\underline{#1}}
 \newcommand{\tinytableTabularrayStrikeout}[1]{\sout{#1}}
@@ -272,14 +286,19 @@ see \url{http://rmarkdown.rstudio.com}.
 \section{Introduction}\label{introduction}
 
 You can add references either by referring to their id in the .bib file
-e.g., (\emph{1}), or by switching to the visual editor (Cogwheel in the
-.Rmd menu -\textgreater{} Use Visual Editor).
-{[}(\emph{2}){]}(\emph{2})(\emph{3})
+e.g., (Marinković et al., 2019), or by switching to the visual editor
+(Cogwheel in the .Rmd menu -\textgreater{} Use Visual Editor). {[}Jokura
+et al. (2023){]}(Jokura et al., 2023)(Jacobs and Ryu, 2023)
+
+It is now a test to edit the text and see how the changes show up on
+GitHub.
+
+Test of git show.
 
 In the visual editor mode, go to `Insert' -\textgreater{} @ Citation
 
 You can select a Zotero library, PubMed, CrossRef etc. and insert the
-citations. (\emph{3})
+citations. (Jacobs and Ryu, 2023)
 
 The easiest way is to use the command line:
 
@@ -289,7 +308,8 @@ The easiest way is to use the command line:
 \end{Highlighting}
 \end{Shaded}
 
-\emph{Platynereis dumerilii} is a marine annelid\ldots{} (\emph{4})
+\emph{Platynereis dumerilii} is a marine annelid\ldots{} (Ozpolat et
+al., 2021)
 
 The references are stored in manuscript/references.bib (need to be
 defined in the Yaml header). This file will automatically updated when
@@ -309,11 +329,13 @@ of the project and change the Yaml to csl: your\_favourite\_journal.csl.
 
 Inserting Figures
 
+Test comment here.
+
 You can add your figures into the rendered document. We saved the
 figures into /manuscript/figures or /manuscript/figure\_supplements and
 can insert them from there. We use knitr::include\_graphics for this.
 The title and legend can also be edited, as will as the width of the
-output figure.
+output figure. Test comment behaviour:
 
 \begin{figure}[H]
 
@@ -382,25 +404,33 @@ use the grid table format described
 
 \textbf{Key Resources Table}
 
+\begin{verbatim}
+Warning: package 'readxl' was built under R version 4.2.3
+\end{verbatim}
+
+\begin{verbatim}
+Warning: The `placement` argument in `tt()` is deprecated. Please use this
+instead: `theme_tt(table, 'placement')`
+\end{verbatim}
+
 \begin{table}[H]
 \centering
 \begin{tblr}[         %% tabularray outer open
 ]                     %% tabularray outer close
 {                     %% tabularray inner open
-hlines,vlines,
 width={1\linewidth},
 colspec={X[]X[]X[]X[]X[]},
-hlines={},vlines={},
+hlines, vlines,
 }                     %% tabularray inner close
 Reagent type (species) or resource & Designation & Source or reference & Identifiers & Additional information \\
-biological sample (N. vectensis) & larval, juvenile and adult N. vectensis & Specimens obtained form the Marine Invertebrate Culture Unit of the University of Exeter & N/A & NA \\
-biological sample (cDNA) & cDNA obtained from N. vectensis & this study & N/A & RNA extracted with Trizol and cDNA synthesized with cDNA synthesis kit according to manufacturers recommendation \\
-biological sample (peptide extract) & peptide extracts obtained from N. vectensis & this study & N/A & Peptides extracted from N. vectensis according to protocol explained in Material and Methods \\
-genetic reagent (cDNA synthesis) & SuperScript™ III First-Strand Synthesis System & Invitrogen (from ThermoFisher) & 18080051 & NA \\
-genetic reagent (Polymerase) & Q5® Hot Start High-Fidelity DNA Polymerase  & New England Biolabs & M0493L & NA \\
-genetic reagent (DNA assembly) & NEBuilder® HiFi DNA Assembly Master Mix & New England Biolabs & E2621L & NA \\
-genetic reagent (restriction enzyme) & EcoRV restriction enzyme & New England Biolabs & R3195L & NA \\
-genetic reagent (restriction enzyme) & Afl2 restriction enzyme & New England Biolabs & R0520L & NA \\
+biological sample (N. vectensis)     & larval, juvenile and adult N. vectensis        & Specimens obtained form the Marine Invertebrate Culture Unit of the University of Exeter & N/A      & NA                                                                                                               \\
+biological sample (cDNA)             & cDNA obtained from N. vectensis                & this study                                                                               & N/A      & RNA extracted with Trizol and cDNA synthesized with cDNA synthesis kit according to manufacturers recommendation \\
+biological sample (peptide extract)  & peptide extracts obtained from N. vectensis    & this study                                                                               & N/A      & Peptides extracted from N. vectensis according to protocol explained in Material and Methods                     \\
+genetic reagent (cDNA synthesis)     & SuperScript™ III First-Strand Synthesis System & Invitrogen (from ThermoFisher)                                                           & 18080051 & NA                                                                                                               \\
+genetic reagent (Polymerase)         & Q5® Hot Start High-Fidelity DNA Polymerase     & New England Biolabs                                                                      & M0493L   & NA                                                                                                               \\
+genetic reagent (DNA assembly)       & NEBuilder® HiFi DNA Assembly Master Mix        & New England Biolabs                                                                      & E2621L   & NA                                                                                                               \\
+genetic reagent (restriction enzyme) & EcoRV restriction enzyme                       & New England Biolabs                                                                      & R3195L   & NA                                                                                                               \\
+genetic reagent (restriction enzyme) & Afl2 restriction enzyme                        & New England Biolabs                                                                      & R0520L   & NA                                                                                                               \\
 \end{tblr}
 \end{table}
 
@@ -515,42 +545,33 @@ England Biolabs & R0520L & NA \\
 \subsection{References}\label{references}
 
 \phantomsection\label{refs}
-\begin{CSLReferences}{0}{1}
-\bibitem[\citeproctext]{ref-Marinkovi2020}
-\CSLLeftMargin{1. }%
-\CSLRightInline{M. Marinković, J. Berger, G. Jékely,
-\href{https://doi.org/10.1098/rstb.2019.0165}{Neuronal coordination of
-motile cilia in locomotion and feeding}. \emph{Philosophical
-Transactions of the Royal Society B: Biological Sciences} \textbf{375},
-20190165 (2019).}
+\begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-Jacobs2023}
+Jacobs EAK, Ryu S. 2023. Larval zebrafish as a model for studying
+individual variability in translational neuroscience research.
+\emph{Frontiers in Behavioral Neuroscience} \textbf{17}.
+doi:\href{https://doi.org/10.3389/fnbeh.2023.1143391}{10.3389/fnbeh.2023.1143391}
 
 \bibitem[\citeproctext]{ref-Jokura_2023}
-\CSLLeftMargin{2. }%
-\CSLRightInline{K. Jokura, N. Ueda, M. Gühmann, L. A. Yañez-Guerra, P.
-Słowiński, K. C. A. Wedgwood, G. Jékely, Nitric oxide feedback to
-ciliary photoreceptor cells gates a UV avoidance circuit. doi:
-\href{https://doi.org/10.7554/elife.91258.1}{10.7554/elife.91258.1}
-(2023).}
+Jokura K, Ueda N, Gühmann M, Yañez-Guerra LA, Słowiński P, Wedgwood KCA,
+Jékely G. 2023. Nitric oxide feedback to ciliary photoreceptor cells
+gates a UV avoidance circuit.
+doi:\href{https://doi.org/10.7554/elife.91258.1}{10.7554/elife.91258.1}
 
-\bibitem[\citeproctext]{ref-Jacobs2023}
-\CSLLeftMargin{3. }%
-\CSLRightInline{E. A. K. Jacobs, S. Ryu,
-\href{https://doi.org/10.3389/fnbeh.2023.1143391}{Larval zebrafish as a
-model for studying individual variability in translational neuroscience
-research}. \emph{Frontiers in Behavioral Neuroscience} \textbf{17}
-(2023).}
+\bibitem[\citeproctext]{ref-Marinkovi2020}
+Marinković M, Berger J, Jékely G. 2019. Neuronal coordination of motile
+cilia in locomotion and feeding. \emph{Philosophical Transactions of the
+Royal Society B: Biological Sciences} \textbf{375}:20190165.
+doi:\href{https://doi.org/10.1098/rstb.2019.0165}{10.1098/rstb.2019.0165}
 
 \bibitem[\citeproctext]{ref-ozpolat2021}
-\CSLLeftMargin{4. }%
-\CSLRightInline{B. D. Ozpolat, N. Randel, E. A. Williams, L. A.
-Bezares-Calderón, G. Andreatta, G. Balavoine, P. Y. Bertucci, D. E. K.
-Ferrier, M. C. Gambi, E. Gazave, M. Handberg-Thorsager, J. Hardege, C.
-Hird, Y.-W. Hsieh, J. Hui, K. N. Mutemi, S. Q. Schneider, O. Simakov, H.
-M. Vergara, M. Vervoort, G. Jékely, K. Tessmar-Raible, F. Raible, D.
-Arendt, The Nereid on the rise: Platynereis as a model system.
-\emph{Zenodo}, doi:
-\href{https://doi.org/10.5281/ZENODO.4907400}{10.5281/ZENODO.4907400}
-(2021).}
+Ozpolat BD, Randel N, Williams EA, Bezares-Calderón LA, Andreatta G,
+Balavoine G, Bertucci PY, Ferrier DEK, Gambi MC, Gazave E,
+Handberg-Thorsager M, Hardege J, Hird C, Hsieh Y-W, Hui J, Mutemi KN,
+Schneider SQ, Simakov O, Vergara HM, Vervoort M, Jékely G,
+Tessmar-Raible K, Raible F, Arendt D. 2021. The Nereid on the rise:
+Platynereis as a model system. \emph{Zenodo}.
+doi:\href{https://doi.org/10.5281/ZENODO.4907400}{10.5281/ZENODO.4907400}
 
 \end{CSLReferences}
 
