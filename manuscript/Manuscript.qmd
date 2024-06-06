@@ -43,6 +43,10 @@ source("../analysis/scripts/statistics_for_paper.R")
 [This]{.underline} is an R **Markdown** *document.* ^Markdown^ is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
 dit is **echt** zo veel beter ***vette shit***[@oh2014][@van2018; @van2020; @García-González2021; @van2021; @Hayes2019][@van2018a]
+teeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeering
+omg
+wat een text
+ik wordt gek 
 
 **text in bold** *italic* [underline]{.underline}
 
